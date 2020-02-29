@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import Dashboard from '../src/component/dasboard/index'
+import Header from '../src/component/header/header'
 
 function App() {
   return (
-    <Dashboard />
+    <Header />
   );
 }
 
