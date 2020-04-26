@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback, memo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +14,13 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { useForm, Controller } from 'react-hook-form'
 import { makeStyles } from '@material-ui/core/styles';
+import { makeSelectCategoriesData, makeSelectCategoriesError } from './selector';
+import { useInjectReducer, useInjectSaga } from 'redux-injectors';
+
+
+import { getCategories } from './actions';
+import reducerCategories from './reducer';
+import sagaCategory from './saga'
 
 function Copyright() {
     return (
@@ -58,10 +66,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignInSide() {
+const SignInSide = () => {
+    const dispatch = useDispatch();
     const classes = useStyles();
     const { handleSubmit, control } = useForm()
     const onSubmit = data => { console.log(data) }
+
+    useInjectReducer({ key: 'reducerCategories', reducer: reducerCategories })
+    useInjectSaga({ key: 'reducerCategories', saga: sagaCategory });
+
+    const categories = useSelector(makeSelectCategoriesData());
+    console.log('categories', categories)
+    const handelGetData = useCallback(() => {
+        console.log('handelGetData')
+        dispatch(getCategories());
+
+    }, []);
+
+
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -76,18 +98,18 @@ export default function SignInSide() {
           </Typography>
                     <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
                         <Controller as={TextField}
-                            name="email" 
+                            name="email"
                             variant="outlined"
                             margin="normal"
                             fullWidth
                             autoComplete="email"
-                            autoFocus 
-                            label="Email Address" 
+                            autoFocus
+                            label="Email Address"
                             id="email"
                             type="text"
                             control={control} />
-                        
-                        <Controller as={TextField}  
+
+                        <Controller as={TextField}
                             variant="outlined"
                             margin="normal"
                             required
@@ -97,7 +119,7 @@ export default function SignInSide() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
-                            control={control}/>
+                            control={control} />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
@@ -108,6 +130,7 @@ export default function SignInSide() {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
+                            onClick={() => handelGetData()}
                         >
                             Sign In
             </Button>
@@ -132,3 +155,4 @@ export default function SignInSide() {
         </Grid>
     );
 }
+export default memo(SignInSide);

@@ -9,18 +9,18 @@ import { Provider } from 'react-redux';
 
 import Login from './container/Login/login.index.js';
 import Home from './container/Home/home.index.js';
-import store from './store/index'
+import configureStore from './store/index'
 
 function App() {
   return (
     // <Login />
-    <Provider store={store()}>
+    <Provider store={configureStore()}>
       <Router>
         <Switch>
           <Route exact path="/login">
             <Login />
           </Route>
-          <Route path="/">
+          <Route path="/home">
             <Home />
           </Route>
         </Switch>

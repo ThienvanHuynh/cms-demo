@@ -1,10 +1,8 @@
 import { all, fork } from 'redux-saga/effects';
 
+import sagaCategory from '../container/Login/saga'
 
-function* mySaga() {
-    yield console.log('okay saga');
-}
 
 export default function* rootSaga() {
-    yield all([fork(mySaga)]);
+    yield all([fork(sagaCategory)]);
 }

@@ -1,6 +1,6 @@
 const delayConfigSuccess = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-export const getCategoriesCallApi = () => {
+export const getUserCallApi = () => {
     return delayConfigSuccess(1000)
         .then(() => {
             return {
@@ -8,18 +8,18 @@ export const getCategoriesCallApi = () => {
                 data: [
                     {
                         id: 1,
-                        name: 'Oi',
-                        quantity: 30,
+                        name: 'Thien',
+                        level: 30,
                     },
                     {
                         id: 2,
-                        name: 'Xoai',
-                        quantity: 10,
+                        name: 'Van',
+                        level: 10,
                     },
                     {
                         id: 3,
-                        name: 'Dua',
-                        quantity: 5,
+                        name: 'Huynh',
+                        level: 5,
                     },
                 ],
             };
