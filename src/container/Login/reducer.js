@@ -9,7 +9,7 @@ export const initState = {
 const { errMess: initErrMess } = initState;
 
 const reducerLogin = createReducer(initState, {
-  [nameActs.LoginSuccess]: (state, action) => {
+  [nameActs.loginSuccess]: (state, action) => {
     console.log("2121212121", initState);
 
     const { data } = action.payload;
@@ -18,7 +18,7 @@ const reducerLogin = createReducer(initState, {
     state.username = data.username;
     state.phone = data.phone;
   },
-  [nameActs.getCategoriesFailed]: (state, action) => {
+  [nameActs.loginFailed]: (state, action) => {
     const { error } = action;
 
     state.errMess = error;

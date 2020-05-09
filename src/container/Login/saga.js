@@ -5,7 +5,7 @@ import * as nameConst from "./const";
 
 function* loginSaga() {
   while (true) {
-    yield take(nameConst.GET_CATEGORIES);
+    yield take(nameConst.LOGIN);
     // yield put(loadingOpen());
     const getResult = yield call(ApiCall.loginCallApi);
     console.log("getResult", getResult);
