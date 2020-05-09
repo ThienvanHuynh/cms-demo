@@ -1,12 +1,12 @@
-import { createAction } from '@reduxjs/toolkit';
-import * as nameConst from './const';
+import { createAction } from "@reduxjs/toolkit";
+import * as nameConst from "./const";
 
-const getCategories = createAction(nameConst.GET_CATEGORIES);
-const getCategoriesSuccess = createAction(nameConst.GET_CATEGORIES_SUCCESS, data => ({ payload: { data } }));
-const getCategoriesFailed = createAction(nameConst.GET_CATEGORIES_FAILED, error => ({ error }));
+const login = createAction(nameConst.LOGIN);
+const loginSuccess = createAction(nameConst.LOGIN_SUCCESS, (data) => ({
+  payload: { data },
+}));
+const loginFailed = createAction(nameConst.LOGIN_FAILED, (error) => ({
+  error,
+}));
 
-export {
-    getCategories,
-    getCategoriesSuccess,
-    getCategoriesFailed
-}
+export { login, loginSuccess, loginFailed };

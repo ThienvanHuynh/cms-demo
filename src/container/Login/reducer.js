@@ -1,26 +1,28 @@
-import { createReducer } from '@reduxjs/toolkit';
-import * as nameActs from './actions';
+import { createReducer } from "@reduxjs/toolkit";
+import * as nameActs from "./actions";
 
 export const initState = {
-    errMess: null,
-    categoriesList: null,
+  errMess: null,
+  username: null,
+  phone: null,
 };
 const { errMess: initErrMess } = initState;
 
-const reducerCategories = createReducer(initState, {
-    [nameActs.getCategoriesSuccess]: (state, action) => {
-        console.log('2121212121', initState)
+const reducerLogin = createReducer(initState, {
+  [nameActs.LoginSuccess]: (state, action) => {
+    console.log("2121212121", initState);
 
-        const { data } = action.payload;
-        console.log('get success', data)
-        state.errMess = initErrMess;
-        state.categoriesList = data;
-    },
-    [nameActs.getCategoriesFailed]: (state, action) => {
-        const { error } = action;
+    const { data } = action.payload;
+    console.log("get success", data);
+    state.errMess = initErrMess;
+    state.username = data.username;
+    state.phone = data.phone;
+  },
+  [nameActs.getCategoriesFailed]: (state, action) => {
+    const { error } = action;
 
-        state.errMess = error;
-    },
+    state.errMess = error;
+  },
 });
 
-export default reducerCategories;
+export default reducerLogin;
