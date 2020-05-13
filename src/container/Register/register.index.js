@@ -1,8 +1,9 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
+import { TextField, Text } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
@@ -12,6 +13,12 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useForm, Controller } from "react-hook-form";
+import { useInjectReducer, useInjectSaga } from "redux-injectors";
+
+import { register } from "./actions";
+import registerSaga from "./saga";
+import reducerRegister from "./reducer";
 
 function Copyright() {
   return (
@@ -47,10 +54,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
+  const dispatch = useDispatch();
   const classes = useStyles();
+  const { handleSubmit, control, errors, register, setError } = useForm();
 
-  const handelSubmit = () => {
-    console.log("submit");
+  useInjectSaga({ key: "reducerRegister", saga: registerSaga });
+
+  const onSubmit = (data) => {
+    console.log("submit", data);
+    dispatch(register(data));
   };
 
   return (
@@ -63,68 +75,68 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                name="name"
+                id="name"
+                label="User Name"
                 variant="outlined"
-                required
                 fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
+                inputRef={register}
+                error={!!errors.name}
+                helperText={errors.name && "Lỗi"}
               />
+              {errors.name && "This is required"}
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
                 name="email"
-                autoComplete="email"
+                id="email"
+                label="Email"
+                variant="outlined"
+                fullWidth
+                inputRef={register}
+                error={!!errors.email}
+                helperText={errors.email && "Lỗi"}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
-                required
-                fullWidth
                 name="password"
-                label="Password"
-                type="password"
                 id="password"
-                autoComplete="current-password"
+                label="Password"
+                variant="outlined"
+                fullWidth
+                inputRef={register}
+                error={!!errors.password}
+                helperText={errors.password && "Lỗi"}
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+              <TextField
+                name="password2"
+                id="password2"
+                label="Confirm Password"
+                variant="outlined"
+                fullWidth
+                inputRef={register}
+                error={!!errors.password2}
+                helperText={errors.password2 && "Lỗi"}
               />
             </Grid>
           </Grid>
           <Button
-            type="button"
+            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => handelSubmit()}
           >
             Sign Up
           </Button>
