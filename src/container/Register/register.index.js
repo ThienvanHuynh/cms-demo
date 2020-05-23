@@ -16,7 +16,7 @@ import Container from "@material-ui/core/Container";
 import { useForm, Controller } from "react-hook-form";
 import { useInjectReducer, useInjectSaga } from "redux-injectors";
 
-import { register } from "./actions";
+import { registerAPI } from "./actions";
 import registerSaga from "./saga";
 import reducerRegister from "./reducer";
 
@@ -62,7 +62,7 @@ export default function SignUp() {
 
   const onSubmit = (data) => {
     console.log("submit", data);
-    dispatch(register(data));
+    dispatch(registerAPI(data));
   };
 
   return (
